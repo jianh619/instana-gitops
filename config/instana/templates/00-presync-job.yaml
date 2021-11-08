@@ -4,7 +4,7 @@ kind: Job
 metadata:
   name: scc-instana-job
   annotations:
-    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook: PreSync
 spec:
   template:
     spec:
@@ -33,7 +33,7 @@ spec:
                 exit 0
               fi
               while : ; do
-                oc get sa default -n crossplane-system
+                oc get sa default -n cloudpak-gtiops-instana
                 if [[ $? != 0 ]]; then
                   echo 'Serviceaccount "default" not found in namespace crossplane-system'
                   sleep 10s
@@ -41,23 +41,12 @@ spec:
                   break
                 fi
               done
-              oc adm policy add-scc-to-user anyuid -z default -n crossplane-system
+              oc adm policy add-scc-to-user anyuid -z default -n cloudpak-gtiops-instana
               result=$?
               if [[ ${result} != 0 ]]; then 
                 exit "${result}"
               fi
-
-              cat << EOF | oc apply -f -
-              apiVersion: v1
-              kind: ServiceAccount
-              metadata:
-                name: crossplane
-                namespace: crossplane-system
-              EOF
-              result=$?
-              if [[ ${result} != 0 ]]; then 
-                exit "${result}"
-              fi              
+     
               exit 0
       restartPolicy: Never
       serviceAccountName: crossplane

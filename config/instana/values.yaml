@@ -1,9 +1,9 @@
 ---
 spec:
-  kubeConfigSecretNS: crossplane-system
+  kubeConfigSecretNS: cloudpak-gitops-instana
   kubeConfigSecretName: k8s-kubeconfig
   instanaVersion: 209-1
   nfsServerHost: in-kind-instana-db.fyre.ibm.com
-  settingsConfigmapNS: crossplane-system
+  settingsConfigmapNS: cloudpak-gitops-instana
   settingsConfigmapName: instana-settings
   clusterName: demo

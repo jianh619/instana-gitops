@@ -174,7 +174,6 @@ spec:
           - mountPath: /root/.kube
             name: kubeconfig              
       restartPolicy: Never
-      serviceAccountName: crossplane
       volumes:
       - name: kubeconfig
         secret:
